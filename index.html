@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kasaragod Football Turf - Real-Time Booking</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16">
+</script>
+    <script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: "#FF3333",
+        secondary: "#FFD700",
+      },
+      borderRadius: {
+        none: "0px",
+        sm: "4px",
+        DEFAULT: "8px",
+        md: "12px",
+        lg: "16px",
+        xl: "20px",
+        "2xl": "24px",
+        "3xl": "32px",
+        full: "9999px",
+        button: "8px",
+      },
+    },
+  },
+};
+</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
+    <style>
+        :where([class^="ri-"])::before {
+            content: "\f3c2";
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .logo-font {
+            font-family: 'Pacifico', serif;
+        }
+        .hero-bg {
+            background-image: url('https://readdy.ai/api/search-image?query=Professional%20football%20turf%20field%20at%20sunset%20with%20players%20in%20action%2C%20dramatic%20lighting%2C%20modern%20sports%20facility%20with%20floodlights%2C%20vibrant%20green%20grass%2C%20goal%20posts%20visible%2C%20dynamic%20atmosphere%2C%20Kerala%20landscape%20in%20background%2C%20high-quality%20sports%20photography%2C%20energetic%20scene%20with%20motion%20blur&width=1920&height=800&seq=hero-turf&orientation=landscape');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .slot-available {
+            background-color: #10B981;
+            color: white;
+        }
+        .slot-booked {
+            background-color: #EF4444;
+            color: white;
+        }
+        .slot-held {
+            background-color: #F59E0B;
+            color: white;
+        }
+        .slot-selected {
+            background-color: #FFD700;
+            color: #1A1A1A;
+        }
+        .hold-timer {
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-black text-white sticky top-0 z-50 shadow-lg">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 flex items-center justify-center">
+                        <i class="ri-football-line text-primary text-xl"></i>
+                    </div>
+                    <span class="logo-font text-xl text-white">Kasaragod Turf</span>
+                </div>
+                
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="hover:text-primary transition-colors">Home</a>
+                    <a href="#booking" class="hover:text-primary transition-colors">Book Now</a>
+                    <a href="#facilities" class="hover:text-primary transition-colors">Facilities</a>
+                    <a href="#gallery" class="hover:text-primary transition-colors">Gallery</a>
+                    <a href="#contact" class="hover:text-primary transition-colors">Contact</a>
+                </nav>
+                
+                <button class="bg-secondary text-black px-6 py-2 !rounded-button font-semibold hover:bg-yellow-400 transition-colors whitespace-nowrap">
+                    Book Now
+                </button>
+                
+                <button class="md:hidden w-8 h-8 flex items-center justify-center" id="mobile-menu-btn">
+                    <i class="ri-menu-line text-xl"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="md:hidden bg-black border-t border-gray-800 hidden" id="mobile-menu">
+            <div class="container mx-auto px-4 py-4 space-y-4">
+                <a href="#home" class="block hover:text-primary transition-colors">Home</a>
+                <a href="#booking" class="block hover:text-primary transition-colors">Book Now</a>
+                <a href="#facilities" class="block hover:text-primary transition-colors">Facilities</a>
+                <a href="#gallery" class="block hover:text-primary transition-colors">Gallery</a>
+                <a href="#contact" class="block hover:text-primary transition-colors">Contact</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-bg relative min-h-screen flex items-center">
+        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-4xl">
+                <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+                    End Double Bookings<br>
+                    <span class="text-secondary">Forever</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-200 mb-8 max-w-2xl">
+                    Real-time availability calendar with instant booking confirmation. No more frustration, just pure football action in Kasaragod's premier turf.
+                </p>
+                
+                <div class="flex flex-wrap gap-6 mb-8">
+                    <div class="flex items-center space-x-2 text-white">
+                        <div class="w-6 h-6 flex items-center justify-center">
+                            <i class="ri-map-pin-line text-primary"></i>
+                        </div>
+                        <span>Kasaragod, Kerala</span>
+                    </div>
+                    <div class="flex items-center space-x-2 text-white">
+                        <div class="w-6 h-6 flex items-center justify-center">
+                            <i class="ri-ruler-line text-primary"></i>
+                        </div>
+                        <span>100x60 meters</span>
+                    </div>
+                    <div class="flex items-center space-x-2 text-white">
+                        <div class="w-6 h-6 flex items-center justify-center">
+                            <i class="ri-time-line text-primary"></i>
+                        </div>
+                        <span>6 AM - 11 PM</span>
+                    </div>
+                </div>
+                
+                <button class="bg-primary text-white px-8 py-4 !rounded-button text-lg font-semibold hover:bg-red-600 transition-colors whitespace-nowrap">
+                    Book Your Slot Now
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Real-time Booking Calendar -->
+    <section id="booking" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Real-Time Booking Calendar</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Select your preferred date and time. Green slots are available, red are booked, and yellow are temporarily held.
+                </p>
+            </div>
+            
+            <div class="max-w-6xl mx-auto">
+                <!-- Date Navigation -->
+                <div class="flex items-center justify-between mb-8 bg-gray-50 p-4 rounded-lg">
+                    <button class="w-10 h-10 flex items-center justify-center bg-black text-white !rounded-button hover:bg-gray-800 transition-colors">
+                        <i class="ri-arrow-left-line"></i>
+                    </button>
+                    <h3 class="text-2xl font-semibold text-gray-900" id="current-date">January 31, 2025</h3>
+                    <button class="w-10 h-10 flex items-center justify-center bg-black text-white !rounded-button hover:bg-gray-800 transition-colors">
+                        <i class="ri-arrow-right-line"></i>
+                    </button>
+                </div>
+                
+                <!-- Time Slots Grid -->
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-8">
+                    <button class="slot-available p-4 !rounded-button text-center font-semibold transition-all hover:scale-105" data-time="06:00">
+                        6:00 AM
+                    </button>
+                    <button class="slot-available p-4 !rounded-button text-center font-semibold transition-all hover:scale-105" data-time="07:00">
+                        7:00 AM
+                    </button>
+                    <button class="slot-booked p-4 !rounded-button text-center font-semibold cursor-not-allowed" data-time="08:00">
+                        8:00 AM
+                    </button>
+                    <button class="slot-available p-4 !rounded-button text-center font-semibold transition-all hover:scale-105" data-time="09:00">
+                        9:00 AM
+                    </button>
+                    <button class="slot-held p-4 !rounded-button text-center font-semibold cursor-not-allowed" data-time="10:00">
+                        10:00 AM
+                    </button>
+                    <button class="slot-available p-4 !rounded-button text-center font-semibold transition-all hover:scale-105" data-time="11:00">
+                        11:00 AM
+                    </button>
+                    <button class="slot-available p-4 !rounded-button text-center font-semibold transition-all hover:scale-105" data-time="12:00">
+                        12:00 PM
+                    </button>
+                    <button class="slot-available p-4 !rounded-button text-center font-semibold transition-all hover:scale-105" data-time="13:00">
+                        1:00 PM
+                    </button>
+                    <button class="slot-booked p-4 !rounded-button text-center font-semibold cursor-not-allowed" data-time="14:00">
+                        2:00 PM
+                    </button>
+                    <button class="slot-available p-4 !rounded-button text-center font-semibold transition-all hover:scale-105" data-time="15:00">
+                        3:00 PM
+                    </button>
+                    <button class="slot-available p-4 !rounded-button text-center font-semibold transition-all hover:scale-105" data-time="16:00">
+                        4:00 PM
+                    </button>
+                    <button class="slot-available p-4 !rounded-button text-center font-semibold transition-all hover:scale-105" data-time="17:00">
+                        5:00 PM
+                    </button>
+                    <button class="slot-available p-4 !rounded-button text-center font-semibold transition-all hover:scale-105" data-time="18:00">
+                        6:00 PM
+                    </button>
+                    <button class="slot-booked p-4 !rounded-button text-center font-semibold cursor-not-allowed" data-time="19:00">
+                        7:00 PM
+                    </button>
+                    <button class="slot-available p-4 !rounded-button text-center font-semibold transition-all hover:scale-105" data-time="20:00">
+                        8:00 PM
+                    </button>
+                    <button class="slot-available p-4 !rounded-button text-center font-semibold transition-all hover:scale-105" data-time="21:00">
+                        9:00 PM
+                    </button>
+                    <button class="slot-available p-4 !rounded-button text-center font-semibold transition-all hover:scale-105" data-time="22:00">
+                        10:00 PM
+                    </button>
+                    <button class="slot-available p-4 !rounded-button text-center font-semibold transition-all hover:scale-105" data-time="23:00">
+                        11:00 PM
+                    </button>
+                </div>
+                
+                <!-- Legend -->
+                <div class="flex flex-wrap justify-center gap-6 mb-8">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-4 h-4 bg-green-500 rounded"></div>
+                        <span class="text-gray-700">Available</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-4 h-4 bg-red-500 rounded"></div>
+                        <span class="text-gray-700">Booked</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-4 h-4 bg-yellow-500 rounded"></div>
+                        <span class="text-gray-700">Temporarily Held</span>
+                    </div>
+                </div>
+                
+                <!-- Hold Timer -->
+                <div class="text-center hidden" id="hold-timer">
+                    <div class="bg-secondary text-black px-6 py-3 !rounded-button inline-flex items-center space-x-2 hold-timer">
+                        <div class="w-5 h-5 flex items-center justify-center">
+                            <i class="ri-time-line"></i>
+                        </div>
+                        <span>Slot held for: <span id="timer-countdown">10:00</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Form Modal -->
+    <div class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden" id="booking-modal">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-lg max-w-md w-full p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-2xl font-bold text-gray-900">Complete Booking</h3>
+                    <button class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-gray-700" id="close-modal">
+                        <i class="ri-close-line text-xl"></i>
+                    </button>
+                </div>
+                
+                <div class="mb-6">
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <p class="text-sm text-gray-600">Selected Slot</p>
+                        <p class="text-lg font-semibold text-gray-900" id="selected-slot">January 31, 2025 - 6:00 AM</p>
+                        <p class="text-xl font-bold text-primary">₹500</p>
+                    </div>
+                </div>
+                
+                <form id="booking-form" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                        <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Enter your full name" required>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                        <input type="tel" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Enter your phone number" required>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                        <input type="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Enter your email address" required>
+                    </div>
+                    
+                    <div class="flex items-center space-x-2">
+                        <input type="checkbox" id="notifications" class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary">
+                        <label for="notifications" class="text-sm text-gray-700">Send me reminders 2 hours before the slot</label>
+                    </div>
+                    
+                    <div class="pt-4">
+                        <h4 class="text-lg font-semibold text-gray-900 mb-4">Payment Method</h4>
+                        <div class="space-y-3">
+                            <label class="flex items-center space-x-3 p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                                <input type="radio" name="payment" value="upi" class="text-primary focus:ring-primary">
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-6 h-6 flex items-center justify-center">
+                                        <i class="ri-smartphone-line text-primary"></i>
+                                    </div>
+                                    <span class="font-medium">UPI (Google Pay, PhonePe, Paytm)</span>
+                                </div>
+                            </label>
+                            <label class="flex items-center space-x-3 p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                                <input type="radio" name="payment" value="card" class="text-primary focus:ring-primary">
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-6 h-6 flex items-center justify-center">
+                                        <i class="ri-bank-card-line text-primary"></i>
+                                    </div>
+                                    <span class="font-medium">Credit/Debit Card</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-primary text-white py-3 !rounded-button font-semibold hover:bg-red-600 transition-colors whitespace-nowrap">
+                        Pay ₹500 & Confirm Booking
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Facilities Section -->
+    <section id="facilities" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">World-Class Facilities</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Experience premium football on our professionally maintained turf with all modern amenities.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                    <div class="w-16 h-16 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="ri-lightbulb-line text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Floodlights</h3>
+                    <p class="text-gray-600">Professional LED floodlights for perfect visibility during night matches</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                    <div class="w-16 h-16 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="ri-shirt-line text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Changing Rooms</h3>
+                    <p class="text-gray-600">Clean, spacious changing rooms with lockers and shower facilities</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                    <div class="w-16 h-16 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="ri-car-line text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Parking</h3>
+                    <p class="text-gray-600">Ample parking space for cars and two-wheelers right next to the turf</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                    <div class="w-16 h-16 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="ri-drop-line text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Water Station</h3>
+                    <p class="text-gray-600">Clean drinking water and hydration station for players</p>
+                </div>
+            </div>
+            
+            <!-- Map Integration -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="p-6 border-b border-gray-200">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Location</h3>
+                    <p class="text-gray-600 flex items-center">
+                        <div class="w-5 h-5 flex items-center justify-center mr-2">
+                            <i class="ri-map-pin-line text-primary"></i>
+                        </div>
+                        Kasaragod Football Turf, Near Railway Station, Kasaragod, Kerala 671121
+                    </p>
+                </div>
+                <div class="h-96 bg-center bg-cover" style="background-image: url('https://public.readdy.ai/gen_page/map_placeholder_1280x720.png')"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Gallery</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    See our turf in action and the amazing matches played here by local teams and players.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-gray-200 rounded-lg overflow-hidden shadow-md">
+                    <img src="https://readdy.ai/api/search-image?query=Professional%20football%20turf%20field%20with%20players%20during%20match%2C%20green%20artificial%20grass%2C%20goal%20posts%2C%20floodlights%2C%20action%20shot%2C%20Kerala%20setting%2C%20high-quality%20sports%20photography%2C%20dynamic%20game%20moment&width=400&height=300&seq=gallery-1&orientation=landscape" alt="Turf Match" class="w-full h-64 object-cover object-top">
+                </div>
+                
+                <div class="bg-gray-200 rounded-lg overflow-hidden shadow-md">
+                    <img src="https://readdy.ai/api/search-image?query=Football%20turf%20facility%20at%20night%20with%20floodlights%20illuminating%20the%20field%2C%20modern%20sports%20complex%2C%20artificial%20grass%2C%20goal%20posts%2C%20Kerala%20architecture%2C%20professional%20lighting%2C%20clean%20facility&width=400&height=300&seq=gallery-2&orientation=landscape" alt="Night View" class="w-full h-64 object-cover object-top">
+                </div>
+                
+                <div class="bg-gray-200 rounded-lg overflow-hidden shadow-md">
+                    <img src="https://readdy.ai/api/search-image?query=Football%20players%20celebrating%20goal%20on%20artificial%20turf%2C%20team%20sport%20action%2C%20Kerala%20local%20players%2C%20joy%20and%20excitement%2C%20professional%20sports%20photography%2C%20dynamic%20moment%2C%20green%20turf%20background&width=400&height=300&seq=gallery-3&orientation=landscape" alt="Team Celebration" class="w-full h-64 object-cover object-top">
+                </div>
+                
+                <div class="bg-gray-200 rounded-lg overflow-hidden shadow-md">
+                    <img src="https://readdy.ai/api/search-image?query=Modern%20football%20turf%20changing%20room%20facility%2C%20clean%20lockers%2C%20benches%2C%20Kerala%20sports%20complex%2C%20professional%20amenities%2C%20well-lit%20interior%2C%20organized%20space%20for%20players&width=400&height=300&seq=gallery-4&orientation=landscape" alt="Changing Room" class="w-full h-64 object-cover object-top">
+                </div>
+                
+                <div class="bg-gray-200 rounded-lg overflow-hidden shadow-md">
+                    <img src="https://readdy.ai/api/search-image?query=Football%20match%20in%20progress%20on%20artificial%20turf%2C%20players%20running%2C%20Kerala%20local%20tournament%2C%20competitive%20game%2C%20professional%20sports%20photography%2C%20action-packed%20moment%2C%20green%20field&width=400&height=300&seq=gallery-5&orientation=landscape" alt="Match Action" class="w-full h-64 object-cover object-top">
+                </div>
+                
+                <div class="bg-gray-200 rounded-lg overflow-hidden shadow-md">
+                    <img src="https://readdy.ai/api/search-image?query=Football%20turf%20aerial%20view%20showing%20full%20field%20dimensions%2C%20goal%20posts%2C%20artificial%20grass%2C%20Kerala%20landscape%2C%20professional%20sports%20facility%2C%20well-maintained%20field%2C%20clear%20markings&width=400&height=300&seq=gallery-6&orientation=landscape" alt="Aerial View" class="w-full h-64 object-cover object-top">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">What Players Say</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Hear from our satisfied customers who love playing at Kasaragod Football Turf.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mr-4">
+                            <i class="ri-user-line text-primary text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900">Arjun Nair</h4>
+                            <p class="text-sm text-gray-600">Local Team Captain</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4">"The real-time booking system is a game-changer! No more confusion about slot availability. The turf quality is excellent and the facilities are top-notch."</p>
+                    <div class="flex text-secondary">
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mr-4">
+                            <i class="ri-user-line text-primary text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900">Priya Menon</h4>
+                            <p class="text-sm text-gray-600">Weekend Player</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4">"Love the instant booking confirmation and SMS reminders. The turf is well-maintained and the floodlights make evening matches perfect. Highly recommended!"</p>
+                    <div class="flex text-secondary">
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mr-4">
+                            <i class="ri-user-line text-primary text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900">Ravi Kumar</h4>
+                            <p class="text-sm text-gray-600">Corporate Team</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4">"Our company team plays here every weekend. The booking process is smooth, facilities are clean, and the turf quality is consistent. Great value for money!"</p>
+                    <div class="flex text-secondary">
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Owner Information -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <div class="w-24 h-24 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="ri-user-line text-primary text-4xl"></i>
+                </div>
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Meet the Owner</h2>
+                <h3 class="text-xl font-semibold text-primary mb-4">Suresh Babu</h3>
+                <p class="text-lg text-gray-700 mb-6 max-w-2xl mx-auto">
+                    A passionate football enthusiast and former district-level player, Suresh has been promoting football in Kasaragod for over 15 years. His vision was to create a world-class facility where local players could train and compete at their best.
+                </p>
+                <div class="flex justify-center space-x-6">
+                    <div class="flex items-center space-x-2 text-gray-600">
+                        <div class="w-5 h-5 flex items-center justify-center">
+                            <i class="ri-phone-line text-primary"></i>
+                        </div>
+                        <span>+91 98765 43210</span>
+                    </div>
+                    <div class="flex items-center space-x-2 text-gray-600">
+                        <div class="w-5 h-5 flex items-center justify-center">
+                            <i class="ri-mail-line text-primary"></i>
+                        </div>
+                        <span>suresh@kasaragodturf.com</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-black text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 flex items-center justify-center">
+                            <i class="ri-football-line text-primary text-xl"></i>
+                        </div>
+                        <span class="logo-font text-xl">Kasaragod Turf</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">
+                        Kerala's premier football turf with real-time booking system. Experience the future of sports facility management.
+                    </p>
+                    <div class="flex space-x-4">
+                        <div class="w-8 h-8 flex items-center justify-center">
+                            <i class="ri-facebook-fill text-primary text-xl"></i>
+                        </div>
+                        <div class="w-8 h-8 flex items-center justify-center">
+                            <i class="ri-instagram-line text-primary text-xl"></i>
+                        </div>
+                        <div class="w-8 h-8 flex items-center justify-center">
+                            <i class="ri-twitter-line text-primary text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#home" class="hover:text-white transition-colors">Home</a></li>
+                        <li><a href="#booking" class="hover:text-white transition-colors">Book Now</a></li>
+                        <li><a href="#facilities" class="hover:text-white transition-colors">Facilities</a></li>
+                        <li><a href="#gallery" class="hover:text-white transition-colors">Gallery</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center space-x-2">
+                            <div class="w-4 h-4 flex items-center justify-center">
+                                <i class="ri-map-pin-line text-primary"></i>
+                            </div>
+                            <span>Near Railway Station, Kasaragod</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <div class="w-4 h-4 flex items-center justify-center">
+                                <i class="ri-phone-line text-primary"></i>
+                            </div>
+                            <span>+91 98765 43210</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <div class="w-4 h-4 flex items-center justify-center">
+                                <i class="ri-mail-line text-primary"></i>
+                            </div>
+                            <span>info@kasaragodturf.com</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Operating Hours</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>Monday - Sunday</li>
+                        <li>6:00 AM - 11:00 PM</li>
+                        <li class="text-primary">Open 365 days</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 mb-4 md:mb-0">
+                    © 2025 Kasaragod Football Turf. All rights reserved.
+                </p>
+                <div class="flex space-x-6 text-gray-400">
+                    <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition-colors">Terms & Conditions</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script id="mobile-menu-script">
+document.addEventListener("DOMContentLoaded", function () {
+  const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+  const mobileMenu = document.getElementById("mobile-menu");
+
+  mobileMenuBtn.addEventListener("click", function () {
+    mobileMenu.classList.toggle("hidden");
+  });
+});
+</script>
+
+    <script id="booking-calendar-script">
+document.addEventListener("DOMContentLoaded", function () {
+  const slots = document.querySelectorAll("[data-time]");
+  const bookingModal = document.getElementById("booking-modal");
+  const closeModal = document.getElementById("close-modal");
+  const selectedSlotDisplay = document.getElementById("selected-slot");
+  const holdTimer = document.getElementById("hold-timer");
+  const timerCountdown = document.getElementById("timer-countdown");
+
+  let selectedSlot = null;
+  let holdInterval = null;
+
+  slots.forEach((slot) => {
+    slot.addEventListener("click", function () {
+      if (
+        this.classList.contains("slot-booked") ||
+        this.classList.contains("slot-held")
+      ) {
+        return;
+      }
+
+      // Clear previous selection
+      slots.forEach((s) => s.classList.remove("slot-selected"));
+
+      // Select current slot
+      this.classList.add("slot-selected");
+      selectedSlot = this.dataset.time;
+
+      // Show hold timer
+      holdTimer.classList.remove("hidden");
+      startHoldTimer();
+
+      // Show booking modal
+      selectedSlotDisplay.textContent = `January 31, 2025 - ${formatTime(selectedSlot)}`;
+      bookingModal.classList.remove("hidden");
+    });
+  });
+
+  closeModal.addEventListener("click", function () {
+    bookingModal.classList.add("hidden");
+    clearHoldTimer();
+  });
+
+  function formatTime(time) {
+    const hour = parseInt(time.split(":")[0]);
+    const ampm = hour >= 12 ? "PM" : "AM";
+    const displayHour = hour > 12 ? hour - 12 : hour;
+    return `${displayHour}:00 ${ampm}`;
+  }
+
+  function startHoldTimer() {
+    let timeLeft = 600; // 10 minutes in seconds
+
+    holdInterval = setInterval(() => {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      timerCountdown.textContent = `${minutes}:${seconds.toString().padStart(2, "0")}`;
+
+      if (timeLeft <= 0) {
+        clearHoldTimer();
+        bookingModal.classList.add("hidden");
+        if (selectedSlot) {
+          const slotElement = document.querySelector(
+            `[data-time="${selectedSlot}"]`,
+          );
+          slotElement.classList.remove("slot-selected");
+        }
+      }
+
+      timeLeft--;
+    }, 1000);
+  }
+
+  function clearHoldTimer() {
+    if (holdInterval) {
+      clearInterval(holdInterval);
+      holdInterval = null;
+    }
+    holdTimer.classList.add("hidden");
+  }
+});
+</script>
+
+    <script id="booking-form-script">
+document.addEventListener("DOMContentLoaded", function () {
+  const bookingForm = document.getElementById("booking-form");
+
+  bookingForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    // Simulate payment processing
+    alert(
+      "Booking confirmed! You will receive SMS and email confirmation shortly.",
+    );
+
+    // Close modal and reset
+    document.getElementById("booking-modal").classList.add("hidden");
+
+    // Mark slot as booked
+    if (selectedSlot) {
+      const slotElement = document.querySelector(
+        `[data-time="${selectedSlot}"]`,
+      );
+      slotElement.classList.remove("slot-selected", "slot-available");
+      slotElement.classList.add("slot-booked");
+      slotElement.textContent = slotElement.textContent;
+    }
+  });
+});
+</script>
+</body>
+</html>
